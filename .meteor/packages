@@ -1,0 +1,10 @@
+standard-app-packages
+iron:router
+fastclick
+http
+underscore
+jnoble:multi-styl
+infinitedg:gsap
+accounts-base
+accounts-password
+aldeed:simple-schema

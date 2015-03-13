@@ -1,0 +1,54 @@
+<template name="landing">
+	<div class="menu-icon menu--closed">
+		<div class="icon-container">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</div>
+	</div>
+	<section class="main-content">
+		<div class="main-logo">
+			<span>Logan Sparlin</span>
+		</div>
+		<div class="content-container">
+			<div class="left-side">
+				{{#each work}}
+					<div class="work-container" data-index="{{index}}">
+						<h1 class="work-title">{{title}}</h1>
+						<p class="short-description">{{short_description}}</p>
+						<span class="type">
+							<a href="#">
+								Type: {{type}}
+							</a>
+						</span>
+					</div>
+				{{/each}}
+			</div>
+			<div class="right-side">
+				<div class="gallery-container">
+					
+				</div>
+			</div>
+		</div>
+		<nav class="content-navigation" role="content-navigation">
+			<div class="pager-container">
+				{{#each work}}
+					<li class="pager-link" data-index="{{index}}">{{index}}</li>
+				{{/each}}
+			</div>
+		</nav>
+		
+
+
+
+		<header class="main-header">
+			<nav class="main-navigation" role="main-navigation">
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</nav>
+		</header>
+	</section>
+</template>
