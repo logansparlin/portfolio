@@ -98,16 +98,16 @@ Template.landing.rendered = function() {
 				newIndex = 1
 			}
 			var currentSlide = $('.work-container.active')
-			$('body').next(currentSlide, showNew)
-			function showNew() {
+			$('body').next(currentSlide, showNext)
+			function showNext() {
 				$('.link--active').removeClass('link--active')
 				$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
-				var newSlide = $('.work-container[data-index="' + newIndex + '"')
-				newSlide.addClass('active')
-				TweenMax.fromTo(newSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+				var nextSlide = $('.work-container[data-index="' + newIndex + '"')
+				nextSlide.addClass('active')
+				TweenMax.fromTo(nextSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
 			}
 		}
-		if(delta > 0) {
+		else if(delta > 0) {
 			// previous
 			Session.set('selectedIndex', (index - 1))
 			if(index >= 2) {
@@ -117,13 +117,13 @@ Template.landing.rendered = function() {
 				newIndex = length
 			}
 			var currentSlide = $('.work-container.active')
-			$('body').next(currentSlide, showNew)
-			function showNew() {
+			TweenMax.fromTo(currentSlide, 0.5, {opacity:1,  y:'-50%'}, {opacity:0, y:'-40%', autoRound: false, force3D:true, ease: Expo.ease, display:'none', onComplete:showPrevious})
+			function showPrevious() {
 				$('.link--active').removeClass('link--active')
 				$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
-				var newSlide = $('.work-container[data-index="' + newIndex + '"')
-				newSlide.addClass('active')
-				TweenMax.fromTo(newSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+				var previousSlide = $('.work-container[data-index="' + newIndex + '"')
+				previousSlide.addClass('active')
+				TweenMax.fromTo(previousSlide, 0.5, {opacity:0, y:'-60%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
 			}
 		}
 	}
