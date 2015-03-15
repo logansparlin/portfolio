@@ -27,25 +27,24 @@ Template.landing.events({
 		$('body').removeClass('menu--open').addClass('menu--closed')
 		$('.menu-icon').removeClass('menu--open').addClass('menu--closed');
 	},
-	'click .pager-link': function(ev) {
+	'click .pager-link:not(.link--active)': function(ev) {
 		ev.preventDefault()
-		var work = $('.work-container.active')
-		$('.pager-link').removeClass('link--active')
-		$(ev.target).addClass('link--active')
-		var currentIndex = Session.get('selectedIndex')
-		var selectedIndex = parseInt($(ev.target).attr('data-index'))
-		$('.work-container').removeClass('active')
-		TweenMax.fromTo(work, 0.5, {opacity:1,  y:'-50%'}, {opacity:0, y:'-60%', autoRound: false, force3D:true, ease: Expo.ease, display:'none', onComplete:showNew})
-		function showNew() {
-			$('.work-container').each(function() {
-				if($(this).attr('data-index') == selectedIndex) {
-					var _this = $(this)
-					_this.addClass('active')
-					TweenMax.fromTo(_this, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
-				}
-			})
+		var changeData = function() {
+			var work = $('.work-container.active')
+			$('.pager-link').removeClass('link--active')
+			$(ev.target).addClass('link--active')
+			var currentIndex = Session.get('selectedIndex')
+			var selectedIndex = parseInt($(ev.target).attr('data-index'))
+			$('.work-container').removeClass('active')
+			$('body').next(work, showNew);
+			function showNew() {
+				var newSlide = $('.work-container[data-index="' + selectedIndex + '"')
+					newSlide.addClass('active')
+					TweenMax.fromTo(newSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+			}
+			Session.set('selectedIndex', selectedIndex)
 		}
-		Session.set('selectedIndex', selectedIndex)
+		changeData()
 	}
 });
 
@@ -83,18 +82,62 @@ Template.landing.rendered = function() {
 	this.autorun(function() {
 		var data = Session.get('selectedIndex')
 		index = parseInt(Session.get('selectedIndex'))
-
-		// Previous and Next
-		var detectDirection = function(event, delta) {
-			if(delta < 0) {
-				console.log('previous')
-			}
-			if(delta > 0) {
-				console.log('next')
-			}
-		}
-		var changeData = _.debounce(detectDirection, 50, true);
-		$('body').on('mousewheel', changeData)
 	});
 
+
+	// Previous and Next
+	var detectDirection = function(event, delta) {
+		var length = Work.find().count()
+		if(delta < 0) {
+			// next
+			Session.set('selectedIndex', (index + 1))
+			if(index <= (length - 1)) {
+				newIndex = (index + 1)
+			} else {
+				Session.set('selectedIndex', 1)
+				newIndex = 1
+			}
+			var currentSlide = $('.work-container.active')
+			$('body').next(currentSlide, showNew)
+			function showNew() {
+				$('.link--active').removeClass('link--active')
+				$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
+				var newSlide = $('.work-container[data-index="' + newIndex + '"')
+				newSlide.addClass('active')
+				TweenMax.fromTo(newSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+			}
+		}
+		if(delta > 0) {
+			// previous
+			Session.set('selectedIndex', (index - 1))
+			if(index >= 2) {
+				newIndex = (index - 1)
+			} else {
+				Session.set('selectedIndex', length)
+				newIndex = length
+			}
+			var currentSlide = $('.work-container.active')
+			$('body').next(currentSlide, showNew)
+			function showNew() {
+				$('.link--active').removeClass('link--active')
+				$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
+				var newSlide = $('.work-container[data-index="' + newIndex + '"')
+				newSlide.addClass('active')
+				TweenMax.fromTo(newSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+			}
+		}
+	}
+	var changeData = _.debounce(detectDirection, 50, true);
+	$('body').on('mousewheel', changeData)
 }
+
+Meteor.startup(function() {
+	$.fn.extend({
+		next: function(el, callback) {
+			TweenMax.fromTo(el, 0.5, {opacity:1,  y:'-50%'}, {opacity:0, y:'-60%', autoRound: false, force3D:true, ease: Expo.ease, display:'none', onComplete:callback})
+		},
+		previous: function() {
+
+		}
+	})
+})
