@@ -39,8 +39,12 @@ Template.landing.events({
 			$('body').next(work, showNew);
 			function showNew() {
 				var newSlide = $('.work-container[data-index="' + selectedIndex + '"')
+					$('.work-container').removeClass('active')
 					newSlide.addClass('active')
-					TweenMax.fromTo(newSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+					TweenMax.fromTo(newSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease, onComplete: removeStyle})
+					function removeStyle() {
+						$('.work-container.active').removeAttribute('style')
+					}
 			}
 			Session.set('selectedIndex', selectedIndex)
 		}
@@ -56,10 +60,9 @@ Template.landing.helpers({
 });
 
 Template.landing.rendered = function() {
-	$()
-}
-
-Template.landing.rendered = function() {
+	$(window).scroll(function(e) {
+		e.preventDefault();
+	})
 	$('.pager-link:first-of-type').addClass('link--active')
 	Session.set('selectedIndex', 1);
 	var index = Session.get('selectedIndex')
@@ -98,13 +101,17 @@ Template.landing.rendered = function() {
 				newIndex = 1
 			}
 			var currentSlide = $('.work-container.active')
+			$('.link--active').removeClass('link--active')
+			$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
 			$('body').next(currentSlide, showNext)
 			function showNext() {
-				$('.link--active').removeClass('link--active')
-				$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
 				var nextSlide = $('.work-container[data-index="' + newIndex + '"')
+				$('.work-container').removeClass('active')
 				nextSlide.addClass('active')
-				TweenMax.fromTo(nextSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+				TweenMax.fromTo(nextSlide, 0.5, {opacity:0, y:'-40%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease, onComplete: removeStyle})
+				function removeStyle() {
+					$('.work-container').removeAttr('style')
+				}
 			}
 		}
 		else if(delta > 0) {
@@ -116,14 +123,18 @@ Template.landing.rendered = function() {
 				Session.set('selectedIndex', length)
 				newIndex = length
 			}
+			$('.link--active').removeClass('link--active')
+			$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
 			var currentSlide = $('.work-container.active')
 			TweenMax.fromTo(currentSlide, 0.5, {opacity:1,  y:'-50%'}, {opacity:0, y:'-40%', autoRound: false, force3D:true, ease: Expo.ease, display:'none', onComplete:showPrevious})
 			function showPrevious() {
-				$('.link--active').removeClass('link--active')
-				$('.pager-link[data-index="' + newIndex + '"').addClass('link--active')
 				var previousSlide = $('.work-container[data-index="' + newIndex + '"')
+				$('.work-container').removeClass('active')
 				previousSlide.addClass('active')
-				TweenMax.fromTo(previousSlide, 0.5, {opacity:0, y:'-60%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease})
+				TweenMax.fromTo(previousSlide, 0.5, {opacity:0, y:'-60%', display:'block'}, {opacity: 1, y:'-50%', autoRound: false, ease: Expo.ease, onComplete: removeStyle})
+				function removeStyle() {
+					$('.work-container').removeAttr('style')
+				}
 			}
 		}
 	}
