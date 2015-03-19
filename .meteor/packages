@@ -1,6 +1,7 @@
 standard-app-packages
 iron:router
 fastclick
+insecure
 http
 underscore
 jnoble:multi-styl
@@ -9,3 +10,4 @@ accounts-base
 accounts-password
 aldeed:simple-schema
 mrt:jquery-mousewheel
+meteorhacks:fast-render

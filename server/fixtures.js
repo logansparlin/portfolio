@@ -55,4 +55,18 @@ if(Work.find().count() === 0) {
 		"client":"Bailey & Morgan Hepler",
 		"featured": true
 	});
+	Work.insert({
+		"index":5,
+		"title":"Savannah Concept Website",
+		"type":"digital",
+		"short_description":"This is the short description where there will be information about the project, the client, the type of work I did, etc.",
+		"long_description":"long description",
+		"year":"2015",
+		"images": {
+			"featuring_image":"",
+			"thumbnail":""
+		},
+		"client":"savannah",
+		"featured": true
+	});
 }
