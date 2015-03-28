@@ -1,5 +1,7 @@
 {
-  "public": {
-
+  "public" : {
+    "ga": {
+      "account":"UA-40570900-6"
+    }
   }
 }

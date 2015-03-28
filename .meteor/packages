@@ -12,3 +12,6 @@ aldeed:simple-schema
 mrt:jquery-mousewheel
 meteorhacks:fast-render
 ongoworks:security
+meteorhacks:kadira
+meteorhacks:kadira-profiler
+datariot:ganalytics
