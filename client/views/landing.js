@@ -5,7 +5,14 @@ Template.landing.events({
 			middle = $('.menu-icon .bar:nth-child(2)'),
 			bottom = $('.menu-icon .bar:last-of-type');
 
-		TweenMax.to(header, 0.5, {visibility: 'visible', opacity: 1, autoRound: false, ease: Quart.easeOut});
+		TweenMax.to(header, 0.5, {
+			visibility: 'visible', 
+			skewY: 0, 
+			opacity: 1, top: 0, 
+			autoRound: false, 
+			ease: Quart.easeOut, 
+			force3D: true
+		});
 		TweenMax.to(middle, 0.4, {x:-50, autoRound: false, ease: Quart.easeOut});
 		TweenMax.to(top, 0.5, {rotation: 45, y: 6, autoRound: false, ease: Quart.easeOut});
 		TweenMax.to(bottom, 0.5, {rotation: -45, y: -7, autoRound: false, ease: Quart.easeOut});
@@ -20,7 +27,13 @@ Template.landing.events({
 		function hide() {
 			header.css('visibility', 'hidden')
 		}
-		TweenMax.to(header, 0.5, {opacity: 0, autoRound: false, ease: Quart.easeOut, onComplete: hide});
+		TweenMax.to(header, 0.5, {
+			opacity: 1,
+			top: '-100%', 
+			autoRound: false, 
+			ease: Quart.easeOut, 
+			onComplete: hide
+		});
 		TweenMax.to(middle, 0.3, {x:0, autoRound: false, ease: Quart.easeOut});
 		TweenMax.to(top, 0.5, {rotation: 0, y: 0, autoRound: false, ease: Quart.easeOut});
 		TweenMax.to(bottom, 0.5, {rotation: 0, y: 0, autoRound: false, ease: Quart.easeOut});
