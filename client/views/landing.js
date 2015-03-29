@@ -4,6 +4,7 @@ Template.landing.events({
 			top = $('.menu-icon .bar:first-of-type'),
 			middle = $('.menu-icon .bar:nth-child(2)'),
 			bottom = $('.menu-icon .bar:last-of-type');
+		GAnalytics.event("click", "Open Menu")
 
 		TweenMax.to(header, 0.5, {
 			visibility: 'visible', 
@@ -24,6 +25,9 @@ Template.landing.events({
 			top = $('.menu-icon .bar:first-of-type'),
 			middle = $('.menu-icon .bar:nth-child(2)')
 			bottom = $('.menu-icon .bar:last-of-type');
+
+		GAnalytics.event("click", "Close Menu")
+
 		function hide() {
 			header.css('visibility', 'hidden')
 		}
